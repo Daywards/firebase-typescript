@@ -4,7 +4,7 @@ import { parseArgs } from 'util';
 
 export function getActiveProject(): string {
     try {
-        const activeProjectRaw = execSync('firebase use', { encoding: 'utf-8' }).trim();
+        const activeProjectRaw = execSync('npx firebase use', { encoding: 'utf-8' }).trim();
         const match = activeProjectRaw.match(/\(([^)]+)\)/);
         return match ? match[1] : activeProjectRaw;
     } catch {

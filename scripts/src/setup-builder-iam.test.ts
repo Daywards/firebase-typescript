@@ -56,7 +56,7 @@ describe('setup-builder-iam', () => {
     it('main should check for existing roles and skip them', () => {
         // Mock getActiveProject / firebase use
         vi.mocked(child_process.execSync).mockImplementation((command: string) => {
-            if (command.startsWith('firebase use')) {
+            if (command.startsWith('npx firebase use')) {
                 return 'active-project';
             }
             if (command.startsWith('gcloud projects get-iam-policy')) {

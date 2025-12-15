@@ -52,7 +52,7 @@ describe('create-builder-sa', () => {
     it('main should create SA if it does not exist', () => {
         // Mock getActiveProject
         vi.mocked(child_process.execSync).mockImplementation((cmd) => {
-            if (cmd.startsWith('firebase use')) return 'my-project';
+            if (cmd.startsWith('npx firebase use')) return 'my-project';
             if (cmd.startsWith('gcloud iam service-accounts describe')) throw new Error('Not found'); // SA not found
             return '';
         });
@@ -67,7 +67,7 @@ describe('create-builder-sa', () => {
 
     it('main should skip creation if SA exists', () => {
         vi.mocked(child_process.execSync).mockImplementation((cmd) => {
-            if (cmd.startsWith('firebase use')) return 'my-project';
+            if (cmd.startsWith('npx firebase use')) return 'my-project';
             if (cmd.startsWith('gcloud iam service-accounts describe')) return ''; // SA found
             return '';
         });

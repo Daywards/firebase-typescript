@@ -23,7 +23,7 @@ Provide concrete instructions and examples.
 - **Executable Commands:** List exact commands for building, testing, and deploying.
     - `pnpm run build`
     - `pnpm test`
-    - `firebase deploy --only functions`
+    - `npx firebase deploy --only functions`
 - **Code Examples:** Show, don't just tell. specific patterns for:
     - Firebase Function triggers (v2 vs v1)
     - Firestore data modeling (converters, types)
@@ -94,7 +94,7 @@ Cloud Functions deployments isolate the `functions` directory, breaking pnpm wor
     Use `firebase-tools-with-isolate`, a fork that wraps the standard CLI.
     1.  **Install:** `pnpm add -D firebase-tools-with-isolate` at root.
     2.  **Config:** Update `firebase.json` usage to deploy via this tool or alias it in scripts.
-    3.  **Deploy:** When you run `firebase deploy`, it automatically isolates the function package before uploading.
+    3.  **Deploy:** When you run `npx firebase deploy`, it automatically isolates the function package before uploading.
 
     _Note: This is significantly more robust than manual `npm pack` strategies._
 
@@ -165,7 +165,7 @@ The root `package.json` should strictly manage the _repository_, not the _applic
 - **Scripts:** Delegate commands using `pnpm -r` (recursive) or `--filter`.
     - `"dev": "pnpm -r run dev --parallel"`
     - `"build": "pnpm -r run build"`
-    - `"deploy:functions": "firebase deploy --only functions"`
+    - `"deploy:functions": "npx firebase deploy --only functions"`
 
 ### 9. Git Guardrails & Conventional Commits
 

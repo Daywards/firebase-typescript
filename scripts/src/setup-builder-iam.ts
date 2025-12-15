@@ -88,8 +88,8 @@ export function main(args?: string[]) {
     let activeProjectRaw: string;
     try {
         // We want the actual project ID, not the alias.
-        // `firebase use` output: "Active Project: production (case-for-firebase-production)"
-        activeProjectRaw = execSync('firebase use', { encoding: 'utf-8' }).trim();
+        // `firebase use` output: "Active Project: production (firebase-typescript-production)"
+        activeProjectRaw = execSync('npx firebase use', { encoding: 'utf-8' }).trim();
     } catch {
         console.error('Error getting active project. Make sure you have the firebase CLI installed and are in a firebase project directory.');
         process.exit(1);

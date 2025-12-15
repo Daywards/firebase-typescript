@@ -1,5 +1,5 @@
 {
-  "name": "case-for-firebase",
+  "name": "firebase-typescript",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -10,16 +10,16 @@
   "packageManager": "pnpm@10.25.0",
   "scripts": {
     "build": "pnpm -r run build",
-    "dev": "pnpm kill-emulator-ports && concurrently --handle-input --kill-others \"firebase emulators:start --only hosting,apphosting\" \"pnpm --filter fb-hosting run dev\" \"pnpm --filter @packages/ui storybook\"",
+    "dev": "pnpm kill-emulator-ports && concurrently --handle-input --kill-others \"npx firebase emulators:start --only hosting,apphosting\" \"pnpm --filter fb-hosting run dev\" \"pnpm --filter @packages/ui storybook\"",
     "format": "prettier --write .",
     "kill-emulator-ports": "pnpm --filter scripts run kill-emulator-ports",
     "lint": "pnpm -r --parallel lint",
-    "list-projects": "firebase projects:list",
+    "list-projects": "npx firebase projects:list",
     "prepare": "husky",
     "reinstall": "rm pnpm-lock.yaml && rm -rf node_modules && pnpm -r exec rm -rf node_modules && pnpm install -r",
     "create-builder-sa": "pnpm --filter scripts run create-builder-sa",
     "setup-builder-iam": "pnpm --filter scripts run setup-builder-iam",
-    "switch-project": "firebase use",
+    "switch-project": "npx firebase use",
     "test": "pnpm -r --parallel run test",
     "typecheck": "pnpm -r --filter !@packages/eslint-config --parallel exec tsc --noEmit"
   },
@@ -29,5 +29,8 @@
     "concurrently": "^9.2.1",
     "husky": "^9.1.7",
     "prettier": "^3.7.4"
+  },
+  "dependencies": {
+    "firebase-tools": "^15.0.0"
   }
 }

@@ -50,14 +50,14 @@ To maximize the effectiveness of Antigravity workflows in this specific tech sta
 ### 2. Safety & "Turbo" Usage
 
 - **Turbo-All for RO**: Use `// turbo-all` for read-only workflows (e.g., status checks, linting) or local scaffolding that doesn't risk data loss.
-- **Manual Approval for Ops**: DO NOT use `// turbo` for deployment or destructive database operations. Always require user confirmation for `firebase deploy` or `firebase functions:delete`.
+- **Manual Approval for Ops**: DO NOT use `// turbo` for deployment or destructive database operations. Always require user confirmation for `npx firebase deploy` or `npx firebase functions:delete`.
 - **Pre-Flight Checks**: Every workflow should start by verifying constraints (e.g., "Am I in the root?", "Is the emulator running?").
 
 ### 3. Contextual Integration
 
 - **Package Manager Awareness**: Always use `pnpm` filters (`pnpm --filter <app>`) instead of `cd`ing into directories. This preserves the root workspace context.
 - **Firebase Awareness**:
-    - Use `firebase use <project>` to ensure the correct environment target before operations.
+    - Use `npx firebase use <project>` to ensure the correct environment target before operations.
     - Check for `firebase-tools` presence or suggest `pnpm add -g firebase-tools`.
 
 ### 4. Standard Workflows (Templates)

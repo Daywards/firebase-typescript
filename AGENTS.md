@@ -65,7 +65,7 @@ Always use `pnpm` from the root with filters or recursive flags.
     - `/test`: Run tests across the workspace
     - `/typecheck`: Run typechecking across the workspace
 - **Development:**
-    - Run all apps & emulators: `pnpm dev` (Must run `firebase emulators:start` + app dev servers)
+    - Run all apps & emulators: `pnpm dev` (Must run `npx firebase emulators:start` + app dev servers)
     - Run specific app: `pnpm --filter fb-app-hosting dev`
 - **Build:**
     - Build all: `pnpm build`

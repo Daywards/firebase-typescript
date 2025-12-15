@@ -26,7 +26,7 @@ It provides a production-ready foundation including:
 
 ## Antigravity Workflow & Cloud Console Setup
 
-> To get a good overview of the [Antigravity](https://antigravity.google/) coding workflow supported by this template, and the Firebase and GCP Cloud Console workflows needed to deploy and monitor, **watch the detailed walkthrough**: [Firebase & Typescript FTW](https://daywards.com/media/the-case-for-firebase/firebase--typescript-ftw)
+> To get a good overview of the [Antigravity](https://antigravity.google/) coding workflow supported by this template, and the Firebase and GCP Cloud Console workflows needed to deploy and monitor, **watch the detailed walkthrough**: [Firebase & Typescript FTW](https://daywards.com/media/firebase-typescript/firebase--typescript-ftw)
 
 ---
 
@@ -72,7 +72,7 @@ pnpm install
     ```
 2.  **App Hosting**: Ensure you have a Firebase App Hosting backend set up and linked to your repository.
     -   Use `pnpm switch-project` to select the active project to initialize App Hosting for.
-    -   Run `firebase init apphosting` to initialize App Hosting for that project.
+    -   Run `npx firebase init apphosting` to initialize App Hosting for that project.
     -   Update `apps/fb-app-hosting/apphosting.yaml` if necessary.
 
 ---
@@ -89,18 +89,17 @@ pnpm dev
 
 | Script | Description |
 | :--- | :--- |
-| `pnpm apply-hosting-target` | Applies the hosting target for the current project. |
 | `pnpm build` | Builds all apps and packages in the workspace. |
 | `pnpm create-builder-sa` | Creates a service account for Cloud Build. |
 | `pnpm dev` | Starts dev servers, emulators, and Storybook concurrently. |
 | `pnpm format` | Formats code using Prettier. |
 | `pnpm kill-emulator-ports` | Kills processes occupying Firebase emulator ports. |
 | `pnpm lint` | Runs linting across all workspaces. |
-| `pnpm list-projects` | Lists available Firebase projects (`firebase projects:list`). |
+| `pnpm list-projects` | Lists available Firebase projects (`npx firebase projects:list`). |
 | `pnpm prepare` | Sets up Husky git hooks. |
 | `pnpm reinstall` | Clean re-install: removes lockfile, node_modules, and reinstalls. |
 | `pnpm setup-builder-iam` | Grants IAM roles to the builder service account. |
-| `pnpm switch-project` | Switches the active Firebase project (`firebase use`). |
+| `pnpm switch-project` | Switches the active Firebase project (`npx firebase use`). |
 | `pnpm test` | Runs tests across all workspaces. |
 | `pnpm typecheck` | Runs TypeScript type checking across all workspaces. |
 

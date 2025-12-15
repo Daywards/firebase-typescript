@@ -202,7 +202,7 @@ steps:
               echo "Triggering App Hosting Rollout..."
 
               # Create rollout and capture JSON output
-              ROLLOUT_JSON=$(firebase apphosting:rollouts:create \
+              ROLLOUT_JSON=$(npx firebase apphosting:rollouts:create \
                 projects/$PROJECT_ID/locations/us-central1/backends/my-app-backend \
                 --git-branch=$BRANCH_NAME \
                 --token=$FIREBASE_TOKEN \
@@ -239,7 +239,7 @@ steps:
 
 - **Docker Image**: Use `gcr.io/google.com/cloudsdktool/cloud-sdk` (includes `gcloud`) or a custom node image with `firebase-tools` installed.
 - **Identity**: Use the Cloud Build Service Account. Grant it `Firebase Admin` and `Service Account User` roles.
-- **Command**: `firebase deploy --only hosting:target-site-name --token $FIREBASE_TOKEN` (or better, use Google Cloud Identity federation so no token is needed).
+- **Command**: `npx firebase deploy --only hosting:target-site-name --token $FIREBASE_TOKEN` (or better, use Google Cloud Identity federation so no token is needed).
 
 **Example `apps/fb-hosting/cloudbuild.yaml`**:
 
@@ -264,7 +264,7 @@ steps:
           - '-c'
           - |
               npm install -g firebase-tools
-              firebase deploy --only hosting:case-for-firebase-hosting --project $PROJECT_ID
+              npx firebase deploy --only hosting:firebase-typescript-hosting --project $PROJECT_ID
 ```
 
 ### 3. Handling Shared Dependencies in Monorepo
