@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "staging-project-id",
+    "staging": "staging-project-id",
+    "production": "production-project-id"
+  },
+  "etags": {}
+}

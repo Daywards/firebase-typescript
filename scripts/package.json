@@ -1,0 +1,30 @@
+{
+    "name": "scripts",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "create-builder-sa": "tsx src/create-builder-sa.ts",
+        "kill-emulator-ports": "tsx src/kill-emulator-ports.ts",
+        "lint": "eslint",
+        "list-projects": "tsx src/list-projects.ts",
+        "prepare-app-hosting-for-deploy": "tsx src/prepare-app-hosting-for-deploy.ts",
+        "setup-builder-iam": "tsx src/setup-builder-iam.ts",
+        "switch-project": "tsx src/switch-project.ts",
+        "test": "vitest run",
+        "test:watch": "vitest watch"
+    },
+    "dependencies": {
+        "cli-table3": "^0.6.5",
+        "firebase-tools": "^13.0.0",
+        "google-auth-library": "^10.5.0"
+    },
+    "devDependencies": {
+        "@packages/eslint-config": "workspace:*",
+        "@types/node": "^20.0.0",
+        "eslint": "^9.17.0",
+        "tsx": "^4.21.0",
+        "typescript": "^5.0.0",
+        "vitest": "^4.0.15"
+    }
+}

@@ -1,0 +1,45 @@
+{
+    "name": "fb-app-hosting",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start -H 0.0.0.0",
+        "lint": "eslint",
+        "test": "vitest run",
+        "test:watch": "vitest watch"
+    },
+    "dependencies": {
+        "@packages/ui": "workspace:*",
+        "@testing-library/dom": "^10.4.1",
+        "next": "16.0.10",
+        "react": "^19.2.3",
+        "react-dom": "^19.2.3",
+        "vite": "^7.2.7"
+    },
+    "dependenciesMeta": {
+        "@packages/ui": {
+            "injected": true
+        }
+    },
+    "devDependencies": {
+        "@eslint/eslintrc": "^3",
+        "@next/eslint-plugin-next": "16.0.10",
+        "@packages/eslint-config": "workspace:*",
+        "@tailwindcss/postcss": "^4",
+        "@testing-library/jest-dom": "^6.6.3",
+        "@testing-library/react": "^16.1.0",
+        "@types/node": "^20",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "@vitejs/plugin-react": "^5.1.2",
+        "eslint": "^9.17.0",
+        "eslint-plugin-react": "^7.37.5",
+        "eslint-plugin-react-hooks": "^7.0.1",
+        "jsdom": "^25.0.1",
+        "tailwindcss": "^4",
+        "typescript": "^5",
+        "vitest": "^4.0.15"
+    }
+}
