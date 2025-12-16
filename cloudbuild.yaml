@@ -50,12 +50,12 @@ steps:
     id: "prepare-deploy"
     waitFor: ["build", "test", "lint"]
 
-  - name: "node:22"
-    entrypoint: "npx"
-    args:
-      ["-y", "pnpm", "install", "--lockfile-only", "--filter", "fb-app-hosting"]
-    id: "regenerate-lockfile"
-    waitFor: ["prepare-deploy"]
+  # - name: "node:22"
+  #   entrypoint: "npx"
+  #   args:
+  #     ["-y", "pnpm", "install", "--lockfile-only", "--filter", "fb-app-hosting"]
+  #   id: "regenerate-lockfile"
+  #   waitFor: ["prepare-deploy"]
 
   - name: "node:22"
     entrypoint: "npx"
@@ -73,7 +73,7 @@ steps:
         "--force",
       ]
     id: "deploy"
-    waitFor: ["build", "test", "lint"]
+    waitFor: ["prepare-deploy"]
 
   - name: "node:22"
     entrypoint: "npx"
