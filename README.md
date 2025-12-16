@@ -163,11 +163,11 @@ You can use the included scripts to automatically create the service account and
 
 1.  **Create Service Account**:
     ```bash
-    pnpm create-builder-sa --sa ci-cd@example.com
+    pnpm create-builder-sa --sa builder
     ```
 2.  **Assign Roles**:
     ```bash
-    pnpm setup-builder-iam --sa ci-cd@example.com
+    pnpm setup-builder-iam --sa builder
     ```
 
 ---

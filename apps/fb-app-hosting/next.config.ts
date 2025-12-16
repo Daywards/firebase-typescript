@@ -1,10 +1,13 @@
+import type { NextConfig } from 'next';
+
 const rootDir = __dirname;
-const nextConfig = {
+const nextConfig: NextConfig = {
     transpilePackages: ['@packages/ui'],
     output: 'standalone',
     outputFileTracingRoot: rootDir,
-    turbopack: {
-        root: rootDir,
+    webpack: (config) => {
+        config.resolve.symlinks = false;
+        return config;
     },
 };
 

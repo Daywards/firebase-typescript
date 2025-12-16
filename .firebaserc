@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "staging-project-id",
+    "default": "case-for-firebase-1",
     "staging": "staging-project-id",
     "production": "production-project-id"
   },

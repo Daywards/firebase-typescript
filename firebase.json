@@ -1,5 +1,17 @@
 {
-  "apphosting": [],
+  "apphosting": [
+    {
+      "backendId": "fb-app-hosting-backend",
+      "rootDir": "apps/fb-app-hosting",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "functions"
+      ]
+    }
+  ],
   "hosting": {
     "public": "apps/fb-hosting/build",
     "ignore": [

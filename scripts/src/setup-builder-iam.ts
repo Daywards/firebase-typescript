@@ -81,7 +81,7 @@ export function main(args?: string[]) {
         process.exit(1);
     }
 
-    const serviceAccountEmail = values.sa;
+    const saArg = values.sa;
     const dryRun = values['dry-run'] ?? false;
 
     // Get active project from firebase
@@ -105,6 +105,12 @@ export function main(args?: string[]) {
     }
 
     console.log(`Targeting Project: ${projectId}`);
+
+    let serviceAccountEmail = saArg;
+    if (!serviceAccountEmail.includes('@')) {
+        serviceAccountEmail = `${saArg}@${projectId}.iam.gserviceaccount.com`;
+    }
+
     console.log(`Service Account: ${serviceAccountEmail}`);
 
     const existingRoles = getExistingRoles(projectId, serviceAccountEmail);
