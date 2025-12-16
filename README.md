@@ -26,7 +26,7 @@ It provides a production-ready foundation including:
 
 ## Antigravity Workflow & Cloud Console Setup
 
-> To get a good overview of the [Antigravity](https://antigravity.google/) coding workflow supported by this template, and the Firebase and GCP Cloud Console workflows needed to deploy and monitor, **watch the detailed walkthrough**: [Firebase & Typescript FTW](https://daywards.com/media/firebase-typescript/firebase--typescript-ftw)
+> To get a good overview of the [Antigravity](https://antigravity.google/) coding workflow supported by this template, and the Firebase and GCP Cloud Console workflows needed to deploy and monitor, **watch the detailed walkthrough**: [Firebase & Typescript FTW](https://daywards.com/media/the-case-for-firebase/firebase--typescript-ftw)
 
 ---
 
@@ -102,6 +102,23 @@ pnpm dev
 | `pnpm switch-project` | Switches the active Firebase project (`npx firebase use`). |
 | `pnpm test` | Runs tests across all workspaces. |
 | `pnpm typecheck` | Runs TypeScript type checking across all workspaces. |
+| `pnpm validate` | Runs linting and type checking concurrently. |
+
+### Available Agent Workflows
+
+Use these slash commands to trigger predefined AI agent workflows:
+
+| Workflow | Description |
+| :--- | :--- |
+| `/commit` | Formulate a full commit given uncommitted changes. |
+| `/format` | Format the codebase using Prettier. |
+| `/lint` | Run linting across the entire monorepo. |
+| `/list-projects` | List all available Firebase projects. |
+| `/push` | Push local commits to remote. |
+| `/switch-project` | Switch the active Firebase project. |
+| `/test` | Run tests across the workspace. |
+| `/typecheck` | Run typechecking across the workspace. |
+| `/validate` | Run linting and typechecking concurrently. |
 
 ---
 
@@ -159,7 +176,7 @@ You can use the included scripts to automatically create the service account and
 1.  **Commit Messages**: We use **Conventional Commits**.
     - Format: `type(scope): subject`
     - Example: `feat(ui): add button component`
-2.  **Pre-commit Hooks**: `husky` will automatically run linting, type checking, and commit message validation.
+2.  **Pre-commit Hooks**: `husky` will automatically run the `validate` script (linting + type checking) and commit message validation.
 
 ---
 

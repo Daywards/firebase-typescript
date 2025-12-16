@@ -64,12 +64,15 @@ Always use `pnpm` from the root with filters or recursive flags.
     - `/switch-project`: Switch the active Firebase project
     - `/test`: Run tests across the workspace
     - `/typecheck`: Run typechecking across the workspace
+    - `/validate`: Run linting and typechecking concurrently across the entire monorepo
 - **Development:**
     - Run all apps & emulators: `pnpm dev` (Must run `npx firebase emulators:start` + app dev servers)
     - Run specific app: `pnpm --filter fb-app-hosting dev`
 - **Build:**
     - Build all: `pnpm build`
     - Build specific: `pnpm --filter @packages/ui build`
+- **Quality Checks:**
+    - Validate all: `pnpm validate` (Runs lint + typecheck concurrently)
 - **Dependency Management:**
     - **Root Dependencies:** You MUST use the `-w` (workspace root) flag when installing any dependency or devDependency in the root `package.json` (e.g., `pnpm add -Dw typescript`).
     - **App Dependencies:** `pnpm --filter <app> add <name>`
