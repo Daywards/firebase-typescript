@@ -55,24 +55,18 @@ export async function main() {
     await fs.rename(oldPath, newPath);
     console.log(`Packed to ${newPath}`);
 
-    // Modify package.json
-    const packageJsonPath = path.join(APP_DIR, 'package.json');
+    console.log(`Updating package.json with pnpm add...`);
 
-    console.log(`Updating ${packageJsonPath}...`);
-
-    const packageJsonContent = await fs.readFile(packageJsonPath, 'utf-8');
-    // Replace "workspace:*" with "file:./pkg-lib/packages-ui.tgz"
-    // Using Regex to be safe
-    const updatedContent = packageJsonContent.replace(
-        /"@packages\/ui":\s*"workspace:\*"/,
-        `"@packages/ui": "file:./pkg-lib/${PKG_FILE}"`,
-    );
-
-    if (packageJsonContent === updatedContent) {
-        console.log('No changes made to package.json (already updated?)');
-    } else {
-        await fs.writeFile(packageJsonPath, updatedContent, 'utf-8');
-        console.log('package.json updated.');
+    // Use pnpm to add the file dependency
+    // This updates package.json and pnpm-lock.yaml correctly
+    try {
+        await execAsync(`npx -y pnpm add ./pkg-lib/${PKG_FILE}`, {
+            cwd: APP_DIR,
+        });
+        console.log('Successfully installed local package.');
+    } catch (error) {
+        console.error('Failed to install local package:', error);
+        process.exit(1);
     }
 
     console.log('Preparation complete.');
