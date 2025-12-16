@@ -7,6 +7,17 @@ const nextConfig: NextConfig = {
     outputFileTracingRoot: rootDir,
     webpack: (config) => {
         config.resolve.symlinks = true;
+
+        config.snapshot = {
+            ...(config.snapshot || {}),
+            managedPaths: [/^(.+?[\\/]node_modules[\\/])(?!@packages\/ui)/],
+        };
+
+        config.watchOptions = {
+            ...(config.watchOptions || {}),
+            ignored: ['**/node_modules/!(@packages/ui/**)'],
+        };
+
         return config;
     },
 };
