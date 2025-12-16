@@ -71,6 +71,7 @@ pnpm install
     }
     ```
 2.  **App Hosting**: Ensure you have a Firebase App Hosting backend set up and linked to your repository.
+    -   Use `pnpm list-projects` to see all projects available to your Firebase account.
     -   Use `pnpm switch-project` to select the active project to initialize App Hosting for.
     -   Run `npx firebase init apphosting` to initialize App Hosting for that project.
     -   Update `apps/fb-app-hosting/apphosting.yaml` if necessary.
