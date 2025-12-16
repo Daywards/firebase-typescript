@@ -44,18 +44,18 @@ steps:
     waitFor: ["install-deps", "git-lfs-pull"]
 
   # Deploy
-  # - name: "node:22"
-  #   entrypoint: "npx"
-  #   args: ["-y", "tsx", "scripts/src/prepare-app-hosting-for-deploy.ts"]
-  #   id: "prepare-deploy"
-  #   waitFor: ["build", "test", "lint"]
+  - name: "node:22"
+    entrypoint: "npx"
+    args: ["-y", "tsx", "scripts/src/prepare-app-hosting-for-deploy.ts"]
+    id: "prepare-deploy"
+    waitFor: ["build", "test", "lint"]
 
-  # - name: "node:22"
-  #   entrypoint: "npx"
-  #   args:
-  #     ["-y", "pnpm", "install", "--lockfile-only", "--filter", "fb-app-hosting"]
-  #   id: "regenerate-lockfile"
-  #   waitFor: ["prepare-deploy"]
+  - name: "node:22"
+    entrypoint: "npx"
+    args:
+      ["-y", "pnpm", "install", "--lockfile-only", "--filter", "fb-app-hosting"]
+    id: "regenerate-lockfile"
+    waitFor: ["prepare-deploy"]
 
   - name: "node:22"
     entrypoint: "npx"

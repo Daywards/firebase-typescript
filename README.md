@@ -1,6 +1,6 @@
 # Firebase Typescript Monorepo
 
-This is a **typescript monorepo** managed with [PNPM](https://pnpm.io/), designed to jumpstart the development of modern Firebase applications with a shared codebase.
+This is a **typescript monorepo** managed with [PNPM](https://pnpm.io/), designed to jumpstart the development of modern Firebase web applications with a shared codebase.
 
 It provides a production-ready foundation including:
 - **Next.js** application configured for **Firebase App Hosting**.
