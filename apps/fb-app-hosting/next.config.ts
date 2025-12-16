@@ -1,3 +1,4 @@
+import path from 'path';
 import type { NextConfig } from 'next';
 
 const rootDir = __dirname;
@@ -7,6 +8,7 @@ const nextConfig: NextConfig = {
     outputFileTracingRoot: rootDir,
     webpack: (config) => {
         config.resolve.symlinks = false;
+        config.resolve.modules = [path.resolve(rootDir, 'node_modules')];
         return config;
     },
 };
