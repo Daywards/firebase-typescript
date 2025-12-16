@@ -50,11 +50,9 @@ describe('prepare-app-hosting', () => {
             expect.stringContaining('packages-ui.tgz')
         );
 
-        expect(fs.readFile).toHaveBeenCalled();
-        expect(fs.writeFile).toHaveBeenCalledWith(
-            expect.stringContaining('package.json'),
-            expect.stringContaining('"@packages/ui": "file:./pkg-lib/packages-ui.tgz"'),
-            'utf-8'
+        expect(mocks.execAsync).toHaveBeenCalledWith(
+            expect.stringContaining('pnpm add'),
+            expect.objectContaining({ cwd: expect.stringContaining('apps/fb-app-hosting') })
         );
     });
 });
