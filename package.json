@@ -16,7 +16,7 @@
     "lint": "pnpm -r --parallel lint",
     "list-projects": "npx firebase projects:list",
     "prepare": "husky",
-    "reinstall": "rm pnpm-lock.yaml && rm -rf node_modules && pnpm -r exec rm -rf node_modules && pnpm install -r",
+    "reinstall": "rm -f pnpm-lock.yaml && rm -rf node_modules && pnpm -r exec rm -rf node_modules && pnpm install -r",
     "create-builder-sa": "pnpm --filter scripts run create-builder-sa",
     "setup-builder-iam": "pnpm --filter scripts run setup-builder-iam",
     "switch-project": "npx firebase use",
