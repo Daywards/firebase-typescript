@@ -6,8 +6,6 @@ const nextConfig: NextConfig = {
     output: 'standalone',
     outputFileTracingRoot: rootDir,
     webpack: (config) => {
-        config.resolve.symlinks = true;
-
         config.snapshot = {
             ...(config.snapshot || {}),
             managedPaths: [/^(.+?[\\/]node_modules[\\/])(?!@packages\/ui)/],

@@ -51,7 +51,7 @@ describe('prepare-app-hosting', () => {
         );
 
         expect(mocks.execAsync).toHaveBeenCalledWith(
-            expect.stringContaining('pnpm add'),
+            expect.stringContaining('pnpm --filter fb-app-hosting add'),
             expect.objectContaining({ cwd: expect.stringContaining('apps/fb-app-hosting') })
         );
     });
