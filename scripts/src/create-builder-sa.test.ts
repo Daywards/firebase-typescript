@@ -1,6 +1,10 @@
-
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { main, createServiceAccount, serviceAccountExists, getActiveProject } from './create-builder-sa.js';
+import {
+    main,
+    createServiceAccount,
+    serviceAccountExists,
+    getActiveProject,
+} from './create-builder-sa.js';
 import * as child_process from 'child_process';
 
 vi.mock('child_process', () => ({
@@ -13,7 +17,9 @@ describe('create-builder-sa', () => {
     });
 
     it('getActiveProject should return parsed project id', () => {
-        vi.mocked(child_process.execSync).mockReturnValue('Active Project: staging (my-project-id)');
+        vi.mocked(child_process.execSync).mockReturnValue(
+            'Active Project: staging (my-project-id)',
+        );
         expect(getActiveProject()).toBe('my-project-id');
     });
 
@@ -24,21 +30,32 @@ describe('create-builder-sa', () => {
 
     it('serviceAccountExists should return true if command succeeds', () => {
         vi.mocked(child_process.execSync).mockReturnValue('');
-        expect(serviceAccountExists('proj', 'sa@proj.iam.gserviceaccount.com')).toBe(true);
+        expect(
+            serviceAccountExists('proj', 'sa@proj.iam.gserviceaccount.com'),
+        ).toBe(true);
     });
 
     it('serviceAccountExists should return false if command fails', () => {
         vi.mocked(child_process.execSync).mockImplementation(() => {
             throw new Error('Not found');
         });
-        expect(serviceAccountExists('proj', 'sa@proj.iam.gserviceaccount.com')).toBe(false);
+        expect(
+            serviceAccountExists('proj', 'sa@proj.iam.gserviceaccount.com'),
+        ).toBe(false);
     });
 
     it('createServiceAccount should extract name from email and run gcloud command', () => {
-        createServiceAccount('proj', 'builder@proj.iam.gserviceaccount.com', 'Display Name', false);
+        createServiceAccount(
+            'proj',
+            'builder@proj.iam.gserviceaccount.com',
+            'Display Name',
+            false,
+        );
         expect(child_process.execSync).toHaveBeenCalledWith(
-            expect.stringContaining('gcloud iam service-accounts create builder'),
-            expect.anything()
+            expect.stringContaining(
+                'gcloud iam service-accounts create builder',
+            ),
+            expect.anything(),
         );
     });
 
@@ -46,29 +63,35 @@ describe('create-builder-sa', () => {
         const consoleSpy = vi.spyOn(console, 'log');
         createServiceAccount('proj', 'builder', 'Display Name', true);
         expect(child_process.execSync).not.toHaveBeenCalled();
-        expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('[DRY RUN]'));
+        expect(consoleSpy).toHaveBeenCalledWith(
+            expect.stringContaining('[DRY RUN]'),
+        );
     });
 
     it('main should create SA if it does not exist', () => {
         // Mock getActiveProject
         vi.mocked(child_process.execSync).mockImplementation((cmd) => {
             if (cmd.startsWith('npx firebase use')) return 'my-project';
-            if (cmd.startsWith('gcloud iam service-accounts describe')) throw new Error('Not found'); // SA not found
+            if (cmd.startsWith('gcloud iam service-accounts describe'))
+                throw new Error('Not found'); // SA not found
             return '';
         });
 
         main(['--sa', 'builder']);
 
         expect(child_process.execSync).toHaveBeenCalledWith(
-            expect.stringContaining('gcloud iam service-accounts create builder'),
-            expect.anything()
+            expect.stringContaining(
+                'gcloud iam service-accounts create builder',
+            ),
+            expect.anything(),
         );
     });
 
     it('main should skip creation if SA exists', () => {
         vi.mocked(child_process.execSync).mockImplementation((cmd) => {
             if (cmd.startsWith('npx firebase use')) return 'my-project';
-            if (cmd.startsWith('gcloud iam service-accounts describe')) return ''; // SA found
+            if (cmd.startsWith('gcloud iam service-accounts describe'))
+                return ''; // SA found
             return '';
         });
 
@@ -77,8 +100,10 @@ describe('create-builder-sa', () => {
 
         expect(child_process.execSync).not.toHaveBeenCalledWith(
             expect.stringContaining('create'),
-            expect.anything()
+            expect.anything(),
         );
-        expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('already exists'));
+        expect(consoleSpy).toHaveBeenCalledWith(
+            expect.stringContaining('already exists'),
+        );
     });
 });

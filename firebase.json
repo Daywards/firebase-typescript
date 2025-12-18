@@ -1,46 +1,42 @@
 {
-  "apphosting": [
-    {
-      "backendId": "fb-app-hosting-backend",
-      "rootDir": "apps/fb-app-hosting",
-      "ignore": [
-        "node_modules",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log",
-        "functions"
-      ]
-    }
-  ],
-  "hosting": {
-    "public": "apps/fb-hosting/build",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
-  },
-  "emulators": {
-    "apphosting": {
-      "port": 5006,
-      "rootDirectory": "apps/fb-app-hosting",
-      "startCommand": "pnpm dev"
-    },
-    "auth": {
-      "port": 9099
-    },
-    "functions": {
-      "port": 5001
-    },
-    "firestore": {
-      "port": 8090
-    },
-    "ui": {
-      "enabled": true
-    },
+    "apphosting": [
+        {
+            "backendId": "fb-app-hosting-backend",
+            "rootDir": "apps/fb-app-hosting",
+            "ignore": [
+                "node_modules",
+                ".git",
+                "firebase-debug.log",
+                "firebase-debug.*.log",
+                "functions"
+            ]
+        }
+    ],
     "hosting": {
-      "port": 5005
+        "public": "apps/fb-hosting/build",
+        "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
     },
-    "singleProjectMode": true
-  }
+    "emulators": {
+        "apphosting": {
+            "port": 5006,
+            "rootDirectory": "apps/fb-app-hosting",
+            "startCommand": "pnpm dev"
+        },
+        "auth": {
+            "port": 9099
+        },
+        "functions": {
+            "port": 5001
+        },
+        "firestore": {
+            "port": 8090
+        },
+        "ui": {
+            "enabled": true
+        },
+        "hosting": {
+            "port": 5005
+        },
+        "singleProjectMode": true
+    }
 }

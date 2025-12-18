@@ -1,4 +1,3 @@
-
 import { execSync } from 'child_process';
 import { parseArgs } from 'util';
 
@@ -36,7 +35,12 @@ export function getActiveProject(): string {
     }
 }
 
-export function addIamBinding(project: string, serviceAccountEmail: string, role: string, dryRun: boolean = false) {
+export function addIamBinding(
+    project: string,
+    serviceAccountEmail: string,
+    role: string,
+    dryRun: boolean = false,
+) {
     const command = `gcloud projects add-iam-policy-binding ${project} --member="serviceAccount:${serviceAccountEmail}" --role="${role}" --quiet --condition=None`;
     if (dryRun) {
         console.log(`[DRY RUN] ${command}`);
@@ -46,16 +50,27 @@ export function addIamBinding(project: string, serviceAccountEmail: string, role
     }
 }
 
-export function getExistingRoles(project: string, serviceAccountEmail: string): string[] {
+export function getExistingRoles(
+    project: string,
+    serviceAccountEmail: string,
+): string[] {
     try {
         const command = `gcloud projects get-iam-policy ${project} --format=json`;
-        const output = execSync(command, { encoding: 'utf-8', stdio: ['ignore', 'pipe', 'ignore'] });
+        const output = execSync(command, {
+            encoding: 'utf-8',
+            stdio: ['ignore', 'pipe', 'ignore'],
+        });
         const policy = JSON.parse(output);
         const roles: string[] = [];
 
         if (policy.bindings) {
             for (const binding of policy.bindings) {
-                if (binding.members && binding.members.includes(`serviceAccount:${serviceAccountEmail}`)) {
+                if (
+                    binding.members &&
+                    binding.members.includes(
+                        `serviceAccount:${serviceAccountEmail}`,
+                    )
+                ) {
                     roles.push(binding.role);
                 }
             }
@@ -77,7 +92,9 @@ export function main(args?: string[]) {
     });
 
     if (!values.sa) {
-        console.error('Usage: tsx setup-builder-iam.ts --sa <service-account-email>');
+        console.error(
+            'Usage: tsx setup-builder-iam.ts --sa <service-account-email>',
+        );
         process.exit(1);
     }
 
@@ -89,9 +106,13 @@ export function main(args?: string[]) {
     try {
         // We want the actual project ID, not the alias.
         // `firebase use` output: "Active Project: production (firebase-typescript-production)"
-        activeProjectRaw = execSync('npx firebase use', { encoding: 'utf-8' }).trim();
+        activeProjectRaw = execSync('npx firebase use', {
+            encoding: 'utf-8',
+        }).trim();
     } catch {
-        console.error('Error getting active project. Make sure you have the firebase CLI installed and are in a firebase project directory.');
+        console.error(
+            'Error getting active project. Make sure you have the firebase CLI installed and are in a firebase project directory.',
+        );
         process.exit(1);
     }
 
@@ -100,7 +121,9 @@ export function main(args?: string[]) {
     const projectId = match ? match[1] : activeProjectRaw;
 
     if (!projectId) {
-        console.error(`Could not determine active project ID from output: "${activeProjectRaw}"`);
+        console.error(
+            `Could not determine active project ID from output: "${activeProjectRaw}"`,
+        );
         process.exit(1);
     }
 

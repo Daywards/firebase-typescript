@@ -3,6 +3,7 @@
 This is a **typescript monorepo** managed with [PNPM](https://pnpm.io/), designed to jumpstart the development of modern Firebase web applications with a shared codebase.
 
 It provides a production-ready foundation including:
+
 - **Next.js** application configured for **Firebase App Hosting**.
 - **Vite + React** application configured for **Firebase Hosting**.
 - **Shared packages** for UI components and ESLint configuration.
@@ -33,9 +34,11 @@ It provides a production-ready foundation including:
 ## 🚀 Using this Template
 
 ### 1. Create your repository
+
 Click the **"Use this template"** button on GitHub to create a new repository from this starter.
 
 ### 2. Install Dependencies
+
 Ensure you have `Node.js v22` and `pnpm v10`.
 
 ```bash
@@ -47,6 +50,7 @@ pnpm install
 ```
 
 ### 3. Rename Project
+
 1.  **Package Names**: Update the `name` fields in `package.json` files to match your project:
     - Root `package.json`
     - `apps/fb-app-hosting/package.json`
@@ -60,66 +64,69 @@ pnpm install
     - Package scripts and imports
 
 ### 4. Configure Firebase
+
 1.  **Select Projects**: Update `.firebaserc` with your Firebase project IDs. usage recommendation: Set `default` to your staging project.
     ```json
     {
-      "projects": {
-        "default": "your-staging-project-id",
-        "staging": "your-staging-project-id",
-        "production": "your-production-project-id"
-      }
+        "projects": {
+            "default": "your-staging-project-id",
+            "staging": "your-staging-project-id",
+            "production": "your-production-project-id"
+        }
     }
     ```
 2.  **App Hosting**: Ensure you have a Firebase App Hosting backend set up and linked to your repository.
-    -   Use `pnpm list-projects` to see all projects available to your Firebase account.
-    -   Use `pnpm switch-project` to select the active project to initialize App Hosting for.
-    -   Run `npx firebase init apphosting` to initialize App Hosting for that project.
-    -   Update `apps/fb-app-hosting/apphosting.yaml` if necessary.
+    - Use `pnpm list-projects` to see all projects available to your Firebase account.
+    - Use `pnpm switch-project` to select the active project to initialize App Hosting for.
+    - Run `npx firebase init apphosting` to initialize App Hosting for that project.
+    - Update `apps/fb-app-hosting/apphosting.yaml` if necessary.
 
 ---
 
 ## 🧑‍💻 Development Workflow
 
 ### Start Development Server
+
 Runs the Firebase Emulators, Frontend apps, and Storybook concurrently.
+
 ```bash
 pnpm dev
 ```
 
 ### Available Scripts
 
-| Script | Description |
-| :--- | :--- |
-| `pnpm build` | Builds all apps and packages in the workspace. |
-| `pnpm create-builder-sa` | Creates a service account for Cloud Build. |
-| `pnpm dev` | Starts dev servers, emulators, and Storybook concurrently. |
-| `pnpm format` | Formats code using Prettier. |
-| `pnpm kill-emulator-ports` | Kills processes occupying Firebase emulator ports. |
-| `pnpm lint` | Runs linting across all workspaces. |
-| `pnpm list-projects` | Lists available Firebase projects (`npx firebase projects:list`). |
-| `pnpm prepare` | Sets up Husky git hooks. |
-| `pnpm reinstall` | Clean re-install: removes lockfile, node_modules, and reinstalls. |
-| `pnpm setup-builder-iam` | Grants IAM roles to the builder service account. |
-| `pnpm switch-project` | Switches the active Firebase project (`npx firebase use`). |
-| `pnpm test` | Runs tests across all workspaces. |
-| `pnpm typecheck` | Runs TypeScript type checking across all workspaces. |
-| `pnpm validate` | Runs linting and type checking concurrently. |
+| Script                     | Description                                                       |
+| :------------------------- | :---------------------------------------------------------------- |
+| `pnpm build`               | Builds all apps and packages in the workspace.                    |
+| `pnpm create-builder-sa`   | Creates a service account for Cloud Build.                        |
+| `pnpm dev`                 | Starts dev servers, emulators, and Storybook concurrently.        |
+| `pnpm format`              | Formats code using Prettier.                                      |
+| `pnpm kill-emulator-ports` | Kills processes occupying Firebase emulator ports.                |
+| `pnpm lint`                | Runs linting across all workspaces.                               |
+| `pnpm list-projects`       | Lists available Firebase projects (`npx firebase projects:list`). |
+| `pnpm prepare`             | Sets up Husky git hooks.                                          |
+| `pnpm reinstall`           | Clean re-install: removes lockfile, node_modules, and reinstalls. |
+| `pnpm setup-builder-iam`   | Grants IAM roles to the builder service account.                  |
+| `pnpm switch-project`      | Switches the active Firebase project (`npx firebase use`).        |
+| `pnpm test`                | Runs tests across all workspaces.                                 |
+| `pnpm typecheck`           | Runs TypeScript type checking across all workspaces.              |
+| `pnpm validate`            | Runs linting and type checking concurrently.                      |
 
 ### Available Agent Workflows
 
 Use these slash commands to trigger predefined AI agent workflows:
 
-| Workflow | Description |
-| :--- | :--- |
-| `/commit` | Formulate a full commit given uncommitted changes. |
-| `/format` | Format the codebase using Prettier. |
-| `/lint` | Run linting across the entire monorepo. |
-| `/list-projects` | List all available Firebase projects. |
-| `/push` | Push local commits to remote. |
-| `/switch-project` | Switch the active Firebase project. |
-| `/test` | Run tests across the workspace. |
-| `/typecheck` | Run typechecking across the workspace. |
-| `/validate` | Run linting and typechecking concurrently. |
+| Workflow          | Description                                        |
+| :---------------- | :------------------------------------------------- |
+| `/commit`         | Formulate a full commit given uncommitted changes. |
+| `/format`         | Format the codebase using Prettier.                |
+| `/lint`           | Run linting across the entire monorepo.            |
+| `/list-projects`  | List all available Firebase projects.              |
+| `/push`           | Push local commits to remote.                      |
+| `/switch-project` | Switch the active Firebase project.                |
+| `/test`           | Run tests across the workspace.                    |
+| `/typecheck`      | Run typechecking across the workspace.             |
+| `/validate`       | Run linting and typechecking concurrently.         |
 
 ---
 
@@ -153,6 +160,7 @@ Use these slash commands to trigger predefined AI agent workflows:
 ## 🚢 CI/CD Setup (Cloud Build)
 
 This project includes a `cloudbuild.yaml` file configured for:
+
 1.  **Testing**: Runs unit tests and linting.
 2.  **Building**: Builds all workspace packages.
 3.  **Deploying**: Deploys to Firebase Hosting and triggers App Hosting rollouts.

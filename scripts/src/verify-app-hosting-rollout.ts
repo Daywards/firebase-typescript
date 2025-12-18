@@ -1,4 +1,3 @@
-
 import { GoogleAuth } from 'google-auth-library';
 import { parseArgs } from 'util';
 import { fileURLToPath } from 'url';

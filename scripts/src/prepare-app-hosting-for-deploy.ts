@@ -60,9 +60,12 @@ export async function main() {
     // Use pnpm to add the file dependency
     // This updates package.json and pnpm-lock.yaml correctly
     try {
-        await execAsync(`npx -y pnpm --filter fb-app-hosting add ./pkg-lib/${PKG_FILE}`, {
-            cwd: APP_DIR,
-        });
+        await execAsync(
+            `npx -y pnpm --filter fb-app-hosting add ./pkg-lib/${PKG_FILE}`,
+            {
+                cwd: APP_DIR,
+            },
+        );
         console.log('Successfully installed local package.');
     } catch (error) {
         console.error('Failed to install local package:', error);

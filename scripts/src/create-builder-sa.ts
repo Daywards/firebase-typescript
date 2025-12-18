@@ -1,14 +1,17 @@
-
 import { execSync } from 'child_process';
 import { parseArgs } from 'util';
 
 export function getActiveProject(): string {
     try {
-        const activeProjectRaw = execSync('npx firebase use', { encoding: 'utf-8' }).trim();
+        const activeProjectRaw = execSync('npx firebase use', {
+            encoding: 'utf-8',
+        }).trim();
         const match = activeProjectRaw.match(/\(([^)]+)\)/);
         return match ? match[1] : activeProjectRaw;
     } catch {
-        throw new Error('Failed to get active project. Make sure you have the firebase CLI installed and are in a firebase project directory.');
+        throw new Error(
+            'Failed to get active project. Make sure you have the firebase CLI installed and are in a firebase project directory.',
+        );
     }
 }
 
@@ -32,7 +35,12 @@ export function serviceAccountExists(project: string, email: string): boolean {
     }
 }
 
-export function createServiceAccount(project: string, name: string, displayName: string, dryRun: boolean = false) {
+export function createServiceAccount(
+    project: string,
+    name: string,
+    displayName: string,
+    dryRun: boolean = false,
+) {
     // The gcloud create command takes a NAME (e.g. 'builder'), not the full email.
     // So if the user passed an email, we need to extract the name part.
     let accountName = name;
@@ -60,7 +68,9 @@ export function main(args?: string[]) {
     });
 
     if (!values.sa) {
-        console.error('Usage: tsx create-builder-sa.ts --sa <service-account-email-or-name>');
+        console.error(
+            'Usage: tsx create-builder-sa.ts --sa <service-account-email-or-name>',
+        );
         process.exit(1);
     }
 
@@ -82,9 +92,13 @@ export function main(args?: string[]) {
             console.log(`Service account ${saEmail} already exists.`);
         } else {
             console.log(`Creating service account...`);
-            createServiceAccount(projectId, saArg, 'Cloud Build Service Account', dryRun);
+            createServiceAccount(
+                projectId,
+                saArg,
+                'Cloud Build Service Account',
+                dryRun,
+            );
         }
-
     } catch (err: unknown) {
         if (err instanceof Error) {
             console.error(err.message);

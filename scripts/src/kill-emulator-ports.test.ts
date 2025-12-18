@@ -18,15 +18,17 @@ describe('kill-emulator-ports', () => {
     it('should identify occupied ports and kill them', async () => {
         // Mock firebase.json exists and has content
         vi.mocked(fs.existsSync).mockReturnValue(true);
-        vi.mocked(fs.readFileSync).mockReturnValue(JSON.stringify({
-            emulators: {
-                auth: { port: 9099 },
-                functions: { port: 5001 },
-                firestore: { port: 8080 },
-                hosting: { port: 5000 },
-                ui: { port: 4000 }
-            }
-        }));
+        vi.mocked(fs.readFileSync).mockReturnValue(
+            JSON.stringify({
+                emulators: {
+                    auth: { port: 9099 },
+                    functions: { port: 5001 },
+                    firestore: { port: 8080 },
+                    hosting: { port: 5000 },
+                    ui: { port: 4000 },
+                },
+            }),
+        );
 
         // Mock execSync behaviors
         vi.mocked(execSync).mockImplementation((command: string) => {
@@ -49,8 +51,9 @@ describe('kill-emulator-ports', () => {
             return '';
         });
 
-        const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => { });
-
+        const consoleLogSpy = vi
+            .spyOn(console, 'log')
+            .mockImplementation(() => {});
 
         await main();
 
@@ -59,16 +62,23 @@ describe('kill-emulator-ports', () => {
 
         // Expect checkPortRecursive to have called lsof for all ports
         // We defined some ports in mock, verify at least one check
-        expect(execSync).toHaveBeenCalledWith(expect.stringContaining('lsof -i:9099'), expect.anything());
+        expect(execSync).toHaveBeenCalledWith(
+            expect.stringContaining('lsof -i:9099'),
+            expect.anything(),
+        );
 
         // Expect kill command for occupied ports
-        expect(execSync).toHaveBeenCalledWith(expect.stringContaining('lsof -t -i:9099 | xargs kill -9'));
-        expect(execSync).toHaveBeenCalledWith(expect.stringContaining('lsof -t -i:5000 | xargs kill -9'));
+        expect(execSync).toHaveBeenCalledWith(
+            expect.stringContaining('lsof -t -i:9099 | xargs kill -9'),
+        );
+        expect(execSync).toHaveBeenCalledWith(
+            expect.stringContaining('lsof -t -i:5000 | xargs kill -9'),
+        );
 
         // Expect clean up message
         expect(consoleLogSpy).toHaveBeenCalledWith(
             expect.stringContaining('%s'),
-            expect.stringContaining('Cleaned up ports: 5000, 9099')
+            expect.stringContaining('Cleaned up ports: 5000, 9099'),
         );
     });
 
@@ -79,7 +89,9 @@ describe('kill-emulator-ports', () => {
             throw new Error('No process found');
         });
 
-        const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => { });
+        const consoleLogSpy = vi
+            .spyOn(console, 'log')
+            .mockImplementation(() => {});
 
         await main();
 
