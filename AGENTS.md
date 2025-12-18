@@ -86,6 +86,7 @@ Always use `pnpm` from the root with filters or recursive flags.
 2.  **No `any`:** Use `unknown` or narrower types.
 3.  **Interfaces:** Use `interface` for public API contracts and component props.
 4.  **Zod:** Use Zod for all runtime validation (env vars, API inputs).
+5.  **Scripts:** All new scripts in the `scripts/` workspace must be written in TypeScript (`.ts`) and executed using `tsx`.
 
 ### Code Style
 
