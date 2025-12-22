@@ -27,7 +27,7 @@ It provides a production-ready foundation including:
 
 ## Antigravity Workflow & Cloud Console Setup
 
-> To get a good overview of the [Antigravity](https://antigravity.google/) coding workflow supported by this template, and the Firebase and GCP Cloud Console workflows needed to deploy and monitor, **watch the detailed walkthrough**: [Firebase & Typescript FTW](https://daywards.com/media/the-case-for-firebase/firebase--typescript-ftw)
+> To get a good overview of the [Antigravity](https://antigravity.google/) coding workflow supported by this template, and the Firebase and GCP Cloud Console workflows needed to deploy and monitor, **watch the detailed walkthrough**: [Firebase, Antigravity & Typescript FTW](https://daywards.com/media/the-case-for-firebase/firebase-antigravity-typescript-ftw)
 
 ---
 
