@@ -1,3 +1,2 @@
-@import 'tailwindcss';
 @import '@packages/ui/theme.css';
 @source "../node_modules/@packages/ui";
