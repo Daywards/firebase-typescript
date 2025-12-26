@@ -21,7 +21,7 @@
         "setup-builder-iam": "pnpm --filter scripts run setup-builder-iam",
         "switch-project": "npx firebase use",
         "test": "pnpm -r --parallel run test",
-        "typecheck": "pnpm -r --filter !@packages/eslint-config --parallel exec tsc --noEmit",
+        "typecheck": "pnpm -r --filter !@packages/eslint-config --parallel run typecheck",
         "validate": "concurrently \"pnpm run lint\" \"pnpm run typecheck\""
     },
     "devDependencies": {

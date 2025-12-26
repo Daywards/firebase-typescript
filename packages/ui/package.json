@@ -16,7 +16,8 @@
         "test": "vitest run",
         "test:watch": "vitest watch",
         "storybook": "storybook dev -p 6006 --no-open",
-        "build-storybook": "storybook build"
+        "build-storybook": "storybook build",
+        "typecheck": "tsc --noEmit"
     },
     "devDependencies": {
         "@chromatic-com/storybook": "^4.1.3",

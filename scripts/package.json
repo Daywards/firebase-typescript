@@ -12,7 +12,8 @@
         "setup-builder-iam": "tsx src/setup-builder-iam.ts",
         "switch-project": "tsx src/switch-project.ts",
         "test": "vitest run",
-        "test:watch": "vitest watch"
+        "test:watch": "vitest watch",
+        "typecheck": "tsc --noEmit"
     },
     "dependencies": {
         "cli-table3": "^0.6.5",
