@@ -10,9 +10,10 @@ const require = createRequire(import.meta.url);
 const themePath = require.resolve('@packages/ui/theme.css');
 const themeCss = fs.readFileSync(themePath, 'utf-8');
 
-export const helloWorld = onRequest({
-    serviceAccount: 'fb-functions',
-},
+export const helloWorld = onRequest(
+    {
+        serviceAccount: 'fb-functions',
+    },
     (request, response) => {
         logger.info('Hello logs!', { structuredData: true });
 
@@ -40,4 +41,5 @@ export const helloWorld = onRequest({
         );
 
         response.send(`<!DOCTYPE html>${html}`);
-    });
+    },
+);

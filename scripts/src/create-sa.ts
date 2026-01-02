@@ -5,7 +5,6 @@ import { getActiveProject } from './utils.js';
 
 export { getActiveProject }; // Re-export for potential consumers/tests if needed, or just remove if unused externally
 
-
 export function serviceAccountExists(project: string, email: string): boolean {
     try {
         // We construct the full email if just the name is passed, but the user receives 'email' as arg.

@@ -27,7 +27,7 @@ Options:
     }
 
     // Check process.argv if args not provided (when running directly)
-    if (!args && process.argv.some(arg => arg === '--help' || arg === '-h')) {
+    if (!args && process.argv.some((arg) => arg === '--help' || arg === '-h')) {
         console.log(`
 Usage: tsx setup-functions-iam.ts --sa <service-account-email>
 
