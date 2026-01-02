@@ -1,6 +1,7 @@
 substitutions:
     _APP_HOSTING_REGION: 'us-central1'
     _APP_HOSTING_BACKEND: 'fb-app-hosting-backend'
+    _PUBLIC_FUNCTIONS: 'fbFunction1' # Space-separated list of function names
 
 steps:
     # Git LFS Pull
@@ -95,6 +96,26 @@ steps:
           ]
       id: 'deploy'
       waitFor: ['prepare-app-hosting', 'prepare-functions']
+
+    - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+      entrypoint: 'bash'
+      args:
+          - '-c'
+          - |
+              if [ -n "${_PUBLIC_FUNCTIONS}" ]; then
+                for func in ${_PUBLIC_FUNCTIONS}; do
+                  echo "Setting public access for function: $func"
+                  gcloud functions add-iam-policy-binding $func \
+                    --region=${_APP_HOSTING_REGION} \
+                    --member=allUsers \
+                    --role=roles/cloudfunctions.invoker \
+                    --project=$PROJECT_ID
+                done
+              else
+                echo "No public functions specified."
+              fi
+      id: 'set-public-access'
+      waitFor: ['deploy']
 
     - name: 'node:22'
       entrypoint: 'npx'

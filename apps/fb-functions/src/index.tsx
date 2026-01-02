@@ -10,7 +10,7 @@ const require = createRequire(import.meta.url);
 const themePath = require.resolve('@packages/ui/theme.css');
 const themeCss = fs.readFileSync(themePath, 'utf-8');
 
-export const helloWorld = onRequest(
+export const fbFunction1 = onRequest(
     {
         serviceAccount: 'fb-functions@',
     },
