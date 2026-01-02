@@ -74,7 +74,12 @@ export async function main(args?: string[]) {
 
         const files = await fs.readdir(LIB_DIR);
         // Find the file that looks like sanitizedPkgName-*.tgz (but careful not to match the targetFile itself if it exists from prev run)
-        const packedFiles = files.filter(f => f.startsWith(sanitizedPkgName) && f.endsWith('.tgz') && f !== targetFile);
+        const packedFiles = files.filter(
+            (f) =>
+                f.startsWith(sanitizedPkgName) &&
+                f.endsWith('.tgz') &&
+                f !== targetFile,
+        );
 
         if (packedFiles.length === 0) {
             console.error(`No .tgz file found for ${pkg} in ${LIB_DIR}`);

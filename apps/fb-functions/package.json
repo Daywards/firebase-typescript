@@ -19,7 +19,7 @@
     },
     "packageManager": "pnpm@10.25.0",
     "dependencies": {
-        "@packages/ui": "workspace:*",
+        "@packages/ui": "file:pkg-lib/packages-ui.tgz",
         "firebase-admin": "^13.0.0",
         "firebase-functions": "^6.0.0",
         "react": "^19.2.3",

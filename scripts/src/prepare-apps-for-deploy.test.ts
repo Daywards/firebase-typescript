@@ -11,13 +11,27 @@ const mocks = vi.hoisted(() => {
 // Mock util.promisify to return our execAsyncMock
 vi.mock('util', () => ({
     promisify: vi.fn(() => mocks.execAsync),
-    default: { promisify: vi.fn(() => mocks.execAsync) },
+    parseArgs: vi.fn(({ args }) => {
+        // Simple manual parsing for test
+        const appIndex = args.indexOf('--app');
+        const pkgIndex = args.indexOf('--packages');
+        return {
+            values: {
+                app: appIndex !== -1 ? args[appIndex + 1] : undefined,
+                packages: pkgIndex !== -1 ? args[pkgIndex + 1] : undefined,
+            },
+        };
+    }),
+    default: {
+        promisify: vi.fn(() => mocks.execAsync),
+        parseArgs: vi.fn(),
+    },
 }));
 
 vi.mock('fs/promises');
 vi.mock('child_process');
 
-import { main } from './prepare-app-hosting-for-deploy.js';
+import { main } from './prepare-apps-for-deploy.js';
 
 describe('prepare-app-hosting', () => {
     beforeEach(() => {
@@ -41,7 +55,7 @@ describe('prepare-app-hosting', () => {
         );
         vi.mocked(fs.writeFile).mockResolvedValue(undefined);
 
-        await main();
+        await main(['--app', 'fb-app-hosting', '--packages', '@packages/ui']);
 
         expect(fs.mkdir).toHaveBeenCalledWith(
             expect.stringContaining('pkg-lib'),
