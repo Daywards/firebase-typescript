@@ -1,94 +1,94 @@
 substitutions:
-    _APP_HOSTING_REGION: 'us-central1'
-    _APP_HOSTING_BACKEND: 'fb-app-hosting-backend'
+  _APP_HOSTING_REGION: "us-central1"
+  _APP_HOSTING_BACKEND: "fb-app-hosting-backend"
 
 steps:
-    # Git LFS Pull
-    - name: 'alpine/git'
-      secretEnv: ['GITHUB_TOKEN']
-      entrypoint: 'sh'
-      args:
-          - '-c'
-          - |
-              git config --global credential.helper "" && \
-              git config --global url."https://x-access-token:$$GITHUB_TOKEN@github.com/".insteadOf "https://github.com/" && \
-              apk add git-lfs && \
-              git lfs install && \
-              git lfs pull
-      id: 'git-lfs-pull'
+  # Git LFS Pull
+  - name: "alpine/git"
+    secretEnv: ["GITHUB_TOKEN"]
+    entrypoint: "sh"
+    args:
+      - "-c"
+      - |
+        git config --global credential.helper "" && \
+        git config --global url."https://x-access-token:$$GITHUB_TOKEN@github.com/".insteadOf "https://github.com/" && \
+        apk add git-lfs && \
+        git lfs install && \
+        git lfs pull
+    id: "git-lfs-pull"
 
-    - name: 'node:22'
-      entrypoint: 'npx'
-      args: ['-y', 'pnpm', 'install', '--frozen-lockfile']
-      id: 'install-deps'
+  - name: "node:22"
+    entrypoint: "npx"
+    args: ["-y", "pnpm", "install", "--frozen-lockfile"]
+    id: "install-deps"
 
-    # Lint
-    - name: 'node:22'
-      entrypoint: 'npx'
-      args: ['-y', 'pnpm', 'run', 'lint']
-      id: 'lint'
-      waitFor: ['install-deps']
+  # Lint
+  - name: "node:22"
+    entrypoint: "npx"
+    args: ["-y", "pnpm", "run", "lint"]
+    id: "lint"
+    waitFor: ["install-deps"]
 
-    # Test
-    - name: 'node:22'
-      entrypoint: 'npx'
-      args: ['-y', 'pnpm', 'run', 'test']
-      id: 'test'
-      waitFor: ['install-deps']
+  # Test
+  - name: "node:22"
+    entrypoint: "npx"
+    args: ["-y", "pnpm", "run", "test"]
+    id: "test"
+    waitFor: ["install-deps"]
 
-    # Build
-    - name: 'node:22'
-      entrypoint: 'npx'
-      args: ['-y', 'pnpm', 'run', 'build']
-      id: 'build'
-      waitFor: ['install-deps', 'git-lfs-pull']
+  # Build
+  - name: "node:22"
+    entrypoint: "npx"
+    args: ["-y", "pnpm", "run", "build"]
+    id: "build"
+    waitFor: ["install-deps", "git-lfs-pull"]
 
-    # Deploy
-    - name: 'node:22'
-      entrypoint: 'npx'
-      args: ['-y', 'tsx', 'scripts/src/prepare-app-hosting-for-deploy.ts']
-      id: 'prepare-deploy'
-      waitFor: ['build', 'test', 'lint']
+  # Deploy
+  - name: "node:22"
+    entrypoint: "npx"
+    args: ["-y", "tsx", "scripts/src/prepare-app-hosting-for-deploy.ts"]
+    id: "prepare-deploy"
+    waitFor: ["build", "test", "lint"]
 
-    - name: 'node:22'
-      entrypoint: 'npx'
-      args:
-          [
-              '-y',
-              'firebase-tools',
-              'deploy',
-              '--only',
-              'hosting,apphosting',
-              '--project',
-              '$PROJECT_ID',
-              '--message',
-              'Cloud Build $BUILD_ID',
-              '--force',
-          ]
-      id: 'deploy'
-      waitFor: ['prepare-deploy']
+  - name: "node:22"
+    entrypoint: "npx"
+    args:
+      [
+        "-y",
+        "firebase-tools",
+        "deploy",
+        "--only",
+        "hosting,apphosting,functions",
+        "--project",
+        "$PROJECT_ID",
+        "--message",
+        "Cloud Build $BUILD_ID",
+        "--force",
+      ]
+    id: "deploy"
+    waitFor: ["prepare-deploy"]
 
-    - name: 'node:22'
-      entrypoint: 'npx'
-      args:
-          [
-              '-y',
-              'tsx',
-              'scripts/src/verify-app-hosting-rollout.ts',
-              '--project',
-              '$PROJECT_ID',
-              '--location',
-              '${_APP_HOSTING_REGION}',
-              '--backend',
-              '${_APP_HOSTING_BACKEND}',
-          ]
-      id: 'verify-rollout'
-      waitFor: ['deploy']
+  - name: "node:22"
+    entrypoint: "npx"
+    args:
+      [
+        "-y",
+        "tsx",
+        "scripts/src/verify-app-hosting-rollout.ts",
+        "--project",
+        "$PROJECT_ID",
+        "--location",
+        "${_APP_HOSTING_REGION}",
+        "--backend",
+        "${_APP_HOSTING_BACKEND}",
+      ]
+    id: "verify-rollout"
+    waitFor: ["deploy"]
 
 options:
-    logging: CLOUD_LOGGING_ONLY
+  logging: CLOUD_LOGGING_ONLY
 
 availableSecrets:
-    secretManager:
-        - versionName: projects/$PROJECT_ID/secrets/GITHUB_TOKEN/versions/latest
-          env: 'GITHUB_TOKEN'
+  secretManager:
+    - versionName: projects/$PROJECT_ID/secrets/GITHUB_TOKEN/versions/latest
+      env: "GITHUB_TOKEN"
