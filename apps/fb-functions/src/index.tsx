@@ -12,7 +12,7 @@ const themeCss = fs.readFileSync(themePath, 'utf-8');
 
 export const helloWorld = onRequest(
     {
-        serviceAccount: 'fb-functions',
+        serviceAccount: 'fb-functions@',
     },
     (request, response) => {
         logger.info('Hello logs!', { structuredData: true });

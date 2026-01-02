@@ -53,6 +53,16 @@ export async function main(args?: string[]) {
 
     const latestRollout = rollouts[0];
     const rolloutName = latestRollout.name;
+    const createTime = new Date(latestRollout.createTime).getTime();
+    const now = Date.now();
+    const tenMinutesMs = 10 * 60 * 1000;
+
+    if (now - createTime > tenMinutesMs) {
+        console.error(
+            `Latest rollout ${rolloutName} was created at ${latestRollout.createTime}, which is more than 10 minutes ago.`,
+        );
+        process.exit(1);
+    }
 
     console.log(`Tracking rollout: ${rolloutName}`);
 

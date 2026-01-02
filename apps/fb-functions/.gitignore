@@ -8,3 +8,5 @@ node_modules/
 # Logs
 firebase-debug.log*
 firebase-debug.*.log*
+
+pkg-lib
