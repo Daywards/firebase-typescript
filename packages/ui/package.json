@@ -2,9 +2,13 @@
     "name": "@packages/ui",
     "version": "1.0.0",
     "type": "module",
-    "main": "src/index.tsx",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "exports": {
-        ".": "./src/index.tsx",
+        ".": {
+            "import": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        },
         "./theme.css": "./src/theme.css"
     },
     "private": true,
@@ -12,6 +16,8 @@
         "react": "^19.0.0"
     },
     "scripts": {
+        "build": "rm -rf dist && tsc -p tsconfig.build.json",
+        "dev": "tsc -p tsconfig.build.json --watch",
         "lint": "eslint",
         "test": "vitest run",
         "test:watch": "vitest watch",

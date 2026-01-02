@@ -1,8 +1,8 @@
 {
   "projects": {
-    "default": "case-for-firebase-1",
-    "staging": "staging-project-id",
-    "production": "production-project-id"
+    "default": "case-for-firebase-0001-staging",
+    "staging": "case-for-firebase-0001-staging",
+    "production": "case-for-firebase-0001"
   },
   "etags": {}
 }

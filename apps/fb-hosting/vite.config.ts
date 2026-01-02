@@ -17,7 +17,7 @@ export default defineConfig(() => {
                       exclude: [
                           '**/build/**',
                           '**/dist/**',
-                          '**/node_modules/**',
+                          '**/node_modules/!(@packages/ui/**)',
                           '**/.firebase/**',
                           '**/firebase-debug.log',
                       ],

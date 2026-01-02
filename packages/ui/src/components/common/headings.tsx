@@ -4,6 +4,7 @@ type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
     level?: HeadingLevel;
+    className?: string;
     children: React.ReactNode;
 }
 

@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "outDir": "dist",
+        "sourceMap": true,
+        "strict": true,
+        "target": "es2022",
+        "skipLibCheck": true,
+        "jsx": "react-jsx",
+        "esModuleInterop": true
+    },
+    "compileOnSave": true,
+    "include": ["src"]
+}

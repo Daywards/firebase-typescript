@@ -14,7 +14,20 @@
     ],
     "hosting": {
         "public": "apps/fb-hosting/build",
-        "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+        "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+        "rewrites": [
+            {
+                "source": "/fb-functions/**",
+                "function": "helloWorld"
+            },
+            {
+                "source": "/fb-app-hosting/**",
+                "run": {
+                    "serviceId": "fb-app-hosting-backend",
+                    "region": "us-central1"
+                }
+            }
+        ]
     },
     "emulators": {
         "apphosting": {
@@ -38,5 +51,9 @@
             "port": 5005
         },
         "singleProjectMode": true
+    },
+    "functions": {
+        "source": "apps/fb-functions",
+        "predeploy": ["pnpm --filter fb-functions build"]
     }
 }
