@@ -7,7 +7,7 @@
         "node": "22",
         "pnpm": "^10.0.0"
     },
-    "packageManager": "pnpm@10.25.0",
+    "packageManager": "pnpm@10.27.0",
     "scripts": {
         "build": "pnpm -r run build",
         "dev": "pnpm kill-emulator-ports && concurrently --handle-input --kill-others \"npx firebase emulators:start --only hosting,apphosting,functions\" \"pnpm --filter fb-hosting run dev\" \"pnpm --filter fb-functions run dev\" \"pnpm --filter @packages/ui run dev\" \"pnpm --filter @packages/ui storybook\"",
