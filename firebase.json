@@ -14,7 +14,11 @@
     ],
     "hosting": {
         "public": "apps/fb-hosting/build",
-        "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ],
         "rewrites": [
             {
                 "source": "/fb-functions/**",
@@ -54,6 +58,8 @@
     },
     "functions": {
         "source": "apps/fb-functions",
-        "predeploy": ["pnpm --filter fb-functions build"]
+        "predeploy": [
+            "npx -y pnpm --filter fb-functions build"
+        ]
     }
 }
