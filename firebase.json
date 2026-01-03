@@ -21,7 +21,7 @@
                 "function": "fbFunction1"
             },
             {
-                "source": "/fb-app-hosting/**",
+                "regex": "^/fb-app-hosting(/.*)?$",
                 "run": {
                     "serviceId": "fb-app-hosting-backend",
                     "region": "us-central1"
