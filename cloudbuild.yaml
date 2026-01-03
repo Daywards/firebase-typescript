@@ -105,10 +105,9 @@ steps:
               if [ -n "${_PUBLIC_FUNCTIONS}" ]; then
                 for func in ${_PUBLIC_FUNCTIONS}; do
                   echo "Setting public access for function: $func"
-                  gcloud functions add-iam-policy-binding $func \
+                  gcloud functions add-invoker-policy-binding $func \
                     --region=${_APP_HOSTING_REGION} \
                     --member=allUsers \
-                    --role=roles/run.invoker \
                     --project=$PROJECT_ID
                 done
               else
