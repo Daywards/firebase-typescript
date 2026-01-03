@@ -108,7 +108,7 @@ steps:
                   gcloud functions add-iam-policy-binding $func \
                     --region=${_APP_HOSTING_REGION} \
                     --member=allUsers \
-                    --role=roles/cloudfunctions.invoker \
+                    --role=roles/run.invoker \
                     --project=$PROJECT_ID
                 done
               else
