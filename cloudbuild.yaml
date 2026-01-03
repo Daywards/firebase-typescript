@@ -116,6 +116,20 @@ steps:
       id: 'set-public-access'
       waitFor: ['deploy']
 
+    - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+      entrypoint: 'bash'
+      args:
+          - '-c'
+          - |
+              echo "Setting public access for App Hosting backend: ${_APP_HOSTING_BACKEND}"
+              gcloud run services add-iam-policy-binding ${_APP_HOSTING_BACKEND} \
+                --region=${_APP_HOSTING_REGION} \
+                --member=allUsers \
+                --role=roles/run.invoker \
+                --project=$PROJECT_ID
+      id: 'set-app-hosting-public-access'
+      waitFor: ['deploy']
+
     - name: 'node:22'
       entrypoint: 'npx'
       args:
