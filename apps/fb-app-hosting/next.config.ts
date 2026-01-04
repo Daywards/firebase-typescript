@@ -2,7 +2,7 @@ import type { NextConfig } from 'next';
 
 const rootDir = __dirname;
 const nextConfig: NextConfig = {
-    transpilePackages: ['@packages/ui'],
+    basePath: '/fb-app-hosting',
     output: 'standalone',
     outputFileTracingRoot: rootDir,
     webpack: (config) => {

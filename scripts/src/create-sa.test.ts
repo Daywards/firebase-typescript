@@ -4,7 +4,7 @@ import {
     createServiceAccount,
     serviceAccountExists,
     getActiveProject,
-} from './create-builder-sa.js';
+} from './create-sa.js';
 import * as child_process from 'child_process';
 
 vi.mock('child_process', () => ({

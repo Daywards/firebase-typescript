@@ -1,3 +1,3 @@
-export { Button } from './buttons';
-export { FullyCentered } from './containers';
-export { Heading } from './headings';
+export { Button } from './buttons.js';
+export { FullyCentered } from './containers.js';
+export { Heading } from './headings.js';

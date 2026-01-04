@@ -1,6 +1,7 @@
 substitutions:
     _APP_HOSTING_REGION: 'us-central1'
     _APP_HOSTING_BACKEND: 'fb-app-hosting-backend'
+    _PUBLIC_FUNCTIONS: 'fbFunction1' # Space-separated list of function names
 
 steps:
     # Git LFS Pull
@@ -46,8 +47,36 @@ steps:
     # Deploy
     - name: 'node:22'
       entrypoint: 'npx'
-      args: ['-y', 'tsx', 'scripts/src/prepare-app-hosting-for-deploy.ts']
-      id: 'prepare-deploy'
+      args:
+          [
+              '-y',
+              'pnpm',
+              '--filter',
+              'scripts',
+              'prepare-apps-for-deploy',
+              '--app',
+              'fb-app-hosting',
+              '--packages',
+              '@packages/ui',
+          ]
+      id: 'prepare-app-hosting'
+      waitFor: ['build', 'test', 'lint']
+
+    - name: 'node:22'
+      entrypoint: 'npx'
+      args:
+          [
+              '-y',
+              'pnpm',
+              '--filter',
+              'scripts',
+              'prepare-apps-for-deploy',
+              '--app',
+              'fb-functions',
+              '--packages',
+              '@packages/ui',
+          ]
+      id: 'prepare-functions'
       waitFor: ['build', 'test', 'lint']
 
     - name: 'node:22'
@@ -58,7 +87,7 @@ steps:
               'firebase-tools',
               'deploy',
               '--only',
-              'hosting,apphosting',
+              'hosting,apphosting,functions',
               '--project',
               '$PROJECT_ID',
               '--message',
@@ -66,15 +95,50 @@ steps:
               '--force',
           ]
       id: 'deploy'
-      waitFor: ['prepare-deploy']
+      waitFor: ['prepare-app-hosting', 'prepare-functions']
+
+    - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+      entrypoint: 'bash'
+      args:
+          - '-c'
+          - |
+              if [ -n "${_PUBLIC_FUNCTIONS}" ]; then
+                for func in ${_PUBLIC_FUNCTIONS}; do
+                  echo "Setting public access for function: $func"
+                  gcloud functions add-invoker-policy-binding $func \
+                    --region=${_APP_HOSTING_REGION} \
+                    --member=allUsers \
+                    --project=$PROJECT_ID
+                done
+              else
+                echo "No public functions specified."
+              fi
+      id: 'set-public-access'
+      waitFor: ['deploy']
+
+    - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+      entrypoint: 'bash'
+      args:
+          - '-c'
+          - |
+              echo "Setting public access for App Hosting backend: ${_APP_HOSTING_BACKEND}"
+              gcloud run services add-iam-policy-binding ${_APP_HOSTING_BACKEND} \
+                --region=${_APP_HOSTING_REGION} \
+                --member=allUsers \
+                --role=roles/run.invoker \
+                --project=$PROJECT_ID
+      id: 'set-app-hosting-public-access'
+      waitFor: ['deploy']
 
     - name: 'node:22'
       entrypoint: 'npx'
       args:
           [
               '-y',
-              'tsx',
-              'scripts/src/verify-app-hosting-rollout.ts',
+              'pnpm',
+              '--filter',
+              'scripts',
+              'verify-app-hosting-rollout',
               '--project',
               '$PROJECT_ID',
               '--location',

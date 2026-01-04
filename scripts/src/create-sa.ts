@@ -1,19 +1,9 @@
 import { execSync } from 'child_process';
 import { parseArgs } from 'util';
 
-export function getActiveProject(): string {
-    try {
-        const activeProjectRaw = execSync('npx firebase use', {
-            encoding: 'utf-8',
-        }).trim();
-        const match = activeProjectRaw.match(/\(([^)]+)\)/);
-        return match ? match[1] : activeProjectRaw;
-    } catch {
-        throw new Error(
-            'Failed to get active project. Make sure you have the firebase CLI installed and are in a firebase project directory.',
-        );
-    }
-}
+import { getActiveProject } from './utils.js';
+
+export { getActiveProject }; // Re-export for potential consumers/tests if needed, or just remove if unused externally
 
 export function serviceAccountExists(project: string, email: string): boolean {
     try {

@@ -98,7 +98,7 @@ pnpm dev
 | Script                     | Description                                                       |
 | :------------------------- | :---------------------------------------------------------------- |
 | `pnpm build`               | Builds all apps and packages in the workspace.                    |
-| `pnpm create-builder-sa`   | Creates a service account for Cloud Build.                        |
+| `pnpm create-sa`           | Creates a service account for Cloud Build.                        |
 | `pnpm dev`                 | Starts dev servers, emulators, and Storybook concurrently.        |
 | `pnpm format`              | Formats code using Prettier.                                      |
 | `pnpm kill-emulator-ports` | Kills processes occupying Firebase emulator ports.                |
@@ -171,7 +171,7 @@ You can use the included scripts to automatically create the service account and
 
 1.  **Create Service Account**:
     ```bash
-    pnpm create-builder-sa --sa builder
+    pnpm create-sa --sa builder
     ```
 2.  **Assign Roles**:
     ```bash

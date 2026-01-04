@@ -1,1 +1,1 @@
-export { Button, FullyCentered, Heading, Demo } from './components';
+export { Button, FullyCentered, Heading, Demo } from './components/index.js';

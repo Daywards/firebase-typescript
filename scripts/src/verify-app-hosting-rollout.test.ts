@@ -19,14 +19,16 @@ vi.mock('google-auth-library', () => {
 });
 
 describe('verify-app-hosting-rollout', () => {
+    const NOW = new Date('2024-01-01T12:00:00Z').getTime();
+
     beforeEach(() => {
         vi.resetAllMocks();
         mocks.getClient.mockReset();
         vi.useFakeTimers();
+        vi.setSystemTime(NOW);
     });
 
     afterEach(() => {
-        vi.restoreAllMocks();
         vi.useRealTimers();
     });
 
@@ -36,17 +38,16 @@ describe('verify-app-hosting-rollout', () => {
             request: mockRequest,
         });
 
+        // 1 minute ago
+        const recentTime = new Date(NOW - 60000).toISOString();
+
         mockRequest
             .mockResolvedValueOnce({
                 data: {
                     rollouts: [
                         {
                             name: 'rollouts/test-rollout-1',
-                            createTime: '2023-01-01T12:00:00Z',
-                        },
-                        {
-                            name: 'rollouts/test-rollout-2',
-                            createTime: '2023-01-01T13:00:00Z',
+                            createTime: recentTime,
                         },
                     ],
                 },
@@ -94,12 +95,13 @@ describe('verify-app-hosting-rollout', () => {
         const mockRequest = vi.fn();
         mocks.getClient.mockResolvedValue({ request: mockRequest });
 
+        // 1 minute ago
+        const recentTime = new Date(NOW - 60000).toISOString();
+
         mockRequest
             .mockResolvedValueOnce({
                 data: {
-                    rollouts: [
-                        { name: 'r1', createTime: '2023-01-01T00:00:00Z' },
-                    ],
+                    rollouts: [{ name: 'r1', createTime: recentTime }],
                 },
             })
             .mockResolvedValueOnce({
