@@ -31,6 +31,8 @@ It provides a production-ready foundation including:
 
 > To get a good overview of the [Antigravity](https://antigravity.google/) coding workflow supported by this template, and the Firebase and GCP Cloud Console workflows needed to deploy and monitor, **watch the detailed walkthrough**: [Firebase, Antigravity & Typescript FTW](https://daywards.com/media/the-case-for-firebase/firebase-antigravity-and-typescript-ftw)
 
+> To understand the additional changes made to add Cloud Functions and support reverse proxying with Firebase Hosting, **watch the detailed walkthrough**: [Firebase Reverse Proxying](https://daywards.com/media/the-case-for-firebase/firebase-reverse-proxying)
+
 ---
 
 ## 🚀 Using this Template
