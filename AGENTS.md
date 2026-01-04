@@ -20,6 +20,7 @@ Map of this monorepo:
 ```text
 ├── apps/
 │   ├── fb-app-hosting/    # Next.js app (Target: Firebase App Hosting)
+│   ├── fb-functions/      # Cloud Functions v2 (Serverless Backend)
 │   └── fb-hosting/        # Vite + React app (Target: Firebase Hosting)
 ├── packages/
 │   ├── ui/                # Shared UI component library (Tailwind enabled)
@@ -111,6 +112,7 @@ Always use `pnpm` from the root with filters or recursive flags.
     - `ui` (Changes in `packages/ui`)
     - `fb-hosting` (Changes in `apps/fb-hosting`)
     - `fb-app-hosting` (Changes in `apps/fb-app-hosting`)
+    - `fb-functions` (Changes in `apps/fb-functions`)
     - `scripts` (Changes in `scripts/`)
     - `eslint-config` (Changes to linting config)
     - `build` (Changes to build configurations)
@@ -119,7 +121,7 @@ Always use `pnpm` from the root with filters or recursive flags.
 
 - **App Hosting:** Configured in `apphosting.yaml` inside `apps/fb-app-hosting`.
 - **Hosting:** Configured in root `firebase.json` pointing to `apps/fb-hosting/build`.
-- **Functions:** If added, use `isolate-package` for deployment.
+- **Functions:** Located in `apps/fb-functions`. Uses `firebase-functions` v6 (2nd Gen). Configured in `firebase.json`.
 
 ---
 

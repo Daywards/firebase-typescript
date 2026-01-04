@@ -7,6 +7,7 @@ It provides a production-ready foundation including:
 - **Next.js** application configured for **Firebase App Hosting**.
 - **Vite + React** application configured for **Firebase Hosting**.
 - **Shared packages** for UI components and ESLint configuration.
+- **Cloud Functions** for serverless backend logic.
 - **CI/CD** pipelines ready for Google Cloud Build.
 
 ## 🛠 Features (Batteries Included)
@@ -16,6 +17,7 @@ It provides a production-ready foundation including:
 - **Frameworks**:
     - [Next.js](https://nextjs.org/) (App Router).
     - [Vite](https://vitejs.dev/) + [React](https://react.dev/).
+    - [Cloud Functions](https://firebase.google.com/docs/functions) (2nd Gen).
 - **Styles**: [Tailwind CSS](https://tailwindcss.com/) (v4 optimized).
 - **Cloud Platform**: [Firebase](https://firebase.google.com/) (Hosting, App Hosting, Emulators).
 - **Quality Control**:
@@ -135,6 +137,7 @@ Use these slash commands to trigger predefined AI agent workflows:
 ```text
 ├── apps/
 │   ├── fb-app-hosting/    # Next.js app (Target: Firebase App Hosting)
+│   ├── fb-functions/      # Cloud Functions (Target: Firebase Functions)
 │   └── fb-hosting/        # Vite + React app (Target: Firebase Hosting)
 ├── packages/
 │   ├── ui/                # Shared UI component library (Tailwind enabled)

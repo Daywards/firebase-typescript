@@ -10,6 +10,7 @@ export default {
                 'eslint-config',
                 'fb-app-hosting',
                 'fb-hosting',
+                'fb-functions',
                 'root',
                 'scripts',
                 'ui',
