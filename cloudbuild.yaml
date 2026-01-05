@@ -40,7 +40,7 @@ steps:
     # Build
     - name: 'node:22'
       entrypoint: 'npx'
-      args: ['-y', 'pnpm', 'run', 'build']
+      args: ['-y', 'pnpm', '--filter', 'fb-hosting', 'run', 'build']
       id: 'build'
       waitFor: ['install-deps', 'git-lfs-pull']
 
