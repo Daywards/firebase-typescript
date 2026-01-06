@@ -10,6 +10,7 @@
         "list-projects": "tsx src/list-projects.ts",
         "prepare-apps-for-deploy": "tsx src/prepare-apps-for-deploy.ts",
         "setup-builder-iam": "tsx src/setup-builder-iam.ts",
+        "setup-default-compute-iam": "tsx src/setup-default-compute-iam.ts",
         "setup-functions-iam": "tsx src/setup-functions-iam.ts",
         "switch-project": "tsx src/switch-project.ts",
         "verify-app-hosting-rollout": "tsx src/verify-app-hosting-rollout.ts",
