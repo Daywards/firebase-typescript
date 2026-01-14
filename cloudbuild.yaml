@@ -2,6 +2,8 @@ substitutions:
     _APP_HOSTING_REGION: 'us-central1'
     _APP_HOSTING_BACKEND: 'fb-app-hosting-backend'
     _PUBLIC_FUNCTIONS: 'fbFunction1' # Space-separated list of function names
+    _AR_REPO_LOCATION: 'us-central1'
+    _AR_REPO_NAME: 'app-hosting-repo'
 
 steps:
     # Git LFS Pull
@@ -44,24 +46,7 @@ steps:
       id: 'build'
       waitFor: ['install-deps', 'git-lfs-pull']
 
-    # Deploy
-    - name: 'node:22'
-      entrypoint: 'npx'
-      args:
-          [
-              '-y',
-              'pnpm',
-              '--filter',
-              'scripts',
-              'prepare-apps-for-deploy',
-              '--app',
-              'fb-app-hosting',
-              '--packages',
-              '@packages/ui',
-          ]
-      id: 'prepare-app-hosting'
-      waitFor: ['build', 'test', 'lint']
-
+    # Deploy Functions & Hosting (Firebase)
     - name: 'node:22'
       entrypoint: 'npx'
       args:
@@ -87,67 +72,51 @@ steps:
               'firebase-tools',
               'deploy',
               '--only',
-              'hosting,apphosting,functions',
+              'hosting,functions',
               '--project',
               '$PROJECT_ID',
               '--message',
               'Cloud Build $BUILD_ID',
               '--force',
           ]
-      id: 'deploy'
-      waitFor: ['prepare-app-hosting', 'prepare-functions']
+      id: 'deploy-firebase'
+      waitFor: ['prepare-functions']
 
-    - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    # Deploy App Hosting (Cloud Run)
+    - name: 'gcr.io/cloud-builders/docker'
       entrypoint: 'bash'
       args:
           - '-c'
           - |
-              if [ -n "${_PUBLIC_FUNCTIONS}" ]; then
-                for func in ${_PUBLIC_FUNCTIONS}; do
-                  echo "Setting public access for function: $func"
-                  gcloud functions add-invoker-policy-binding $func \
-                    --region=${_APP_HOSTING_REGION} \
-                    --member=allUsers \
-                    --project=$PROJECT_ID
-                done
-              else
-                echo "No public functions specified."
-              fi
-      id: 'set-public-access'
-      waitFor: ['deploy']
+              docker build -t ${_AR_REPO_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPO_NAME}/fb-app-hosting:$COMMIT_SHA -f apps/fb-app-hosting/Dockerfile apps/fb-app-hosting
+      id: 'build-container'
+      waitFor: ['build', 'test', 'lint']
 
-    - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-      entrypoint: 'bash'
-      args:
-          - '-c'
-          - |
-              echo "Setting public access for App Hosting backend: ${_APP_HOSTING_BACKEND}"
-              gcloud run services add-iam-policy-binding ${_APP_HOSTING_BACKEND} \
-                --region=${_APP_HOSTING_REGION} \
-                --member=allUsers \
-                --role=roles/run.invoker \
-                --project=$PROJECT_ID
-      id: 'set-app-hosting-public-access'
-      waitFor: ['deploy']
-
-    - name: 'node:22'
-      entrypoint: 'npx'
+    - name: 'gcr.io/cloud-builders/docker'
       args:
           [
-              '-y',
-              'pnpm',
-              '--filter',
-              'scripts',
-              'verify-app-hosting-rollout',
+              'push',
+              '${_AR_REPO_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPO_NAME}/fb-app-hosting:$COMMIT_SHA',
+          ]
+      id: 'push-container'
+      waitFor: ['build-container']
+
+    - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+      entrypoint: 'gcloud'
+      args:
+          [
+              'run',
+              'deploy',
+              '${_APP_HOSTING_BACKEND}',
+              '--image',
+              '${_AR_REPO_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPO_NAME}/fb-app-hosting:$COMMIT_SHA',
+              '--region',
+              '${_APP_HOSTING_REGION}',
               '--project',
               '$PROJECT_ID',
-              '--location',
-              '${_APP_HOSTING_REGION}',
-              '--backend',
-              '${_APP_HOSTING_BACKEND}',
           ]
-      id: 'verify-rollout'
-      waitFor: ['deploy']
+      id: 'deploy-cloud-run'
+      waitFor: ['push-container']
 
 options:
     logging: CLOUD_LOGGING_ONLY

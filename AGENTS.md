@@ -39,6 +39,9 @@ Map of this monorepo:
 ├── firebase.json          # Firebase configuration (Emulators, Hosting)
 ├── package.json           # Root scripts and dependencies
 └── pnpm-workspace.yaml    # Workspace definition
+└── terraform/             # Infrastructure as Code
+    ├── modules/           # Reusable Terraform modules
+    └── live/              # Environment-specific configs (Terragrunt)
 ```
 
 ## 3. Tech Stack & Versions
@@ -49,7 +52,10 @@ Map of this monorepo:
     - Next.js 15 (App Router preferred)
     - React 19
 - **Language:** TypeScript 5.x (`strict: true`)
-- **Firebase:** Admin SDK v12, Functions v2
+- **Infrastructure:**
+    - Terraform 1.8.x
+    - Terragrunt 0.58.x
+- **Firebase:** Admin SDK v12, Functions v2, App Hosting
 
 ## 4. Workflows & Commands
 
@@ -116,6 +122,7 @@ Always use `pnpm` from the root with filters or recursive flags.
     - `scripts` (Changes in `scripts/`)
     - `eslint-config` (Changes to linting config)
     - `build` (Changes to build configurations)
+    - `terraform` (Changes to infrastructure code)
 
 ## 6. Firebase Specifics
 

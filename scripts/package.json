@@ -11,6 +11,7 @@
         "prepare-apps-for-deploy": "tsx src/prepare-apps-for-deploy.ts",
         "setup-builder-iam": "tsx src/setup-builder-iam.ts",
         "setup-default-compute-iam": "tsx src/setup-default-compute-iam.ts",
+        "inspect-emulators": "tsx src/inspect-emulators.ts",
         "setup-functions-iam": "tsx src/setup-functions-iam.ts",
         "switch-project": "tsx src/switch-project.ts",
         "verify-app-hosting-rollout": "tsx src/verify-app-hosting-rollout.ts",
@@ -21,7 +22,8 @@
     "dependencies": {
         "cli-table3": "^0.6.5",
         "firebase-tools": "^13.0.0",
-        "google-auth-library": "^10.5.0"
+        "google-auth-library": "^10.5.0",
+        "undici": "^7.18.2"
     },
     "devDependencies": {
         "@packages/eslint-config": "workspace:*",

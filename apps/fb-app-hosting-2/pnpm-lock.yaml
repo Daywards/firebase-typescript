@@ -7,9 +7,6 @@ settings:
 importers:
     .:
         dependencies:
-            '@packages/sdk':
-                specifier: workspace:*
-                version: link:../../packages/sdk
             '@packages/ui':
                 specifier: workspace:*
                 version: link:../../packages/ui

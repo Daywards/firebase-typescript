@@ -1,9 +1,9 @@
 {
-    "name": "fb-app-hosting",
+    "name": "fb-app-hosting-2",
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "next dev --webpack -p 5002",
+        "dev": "next dev --webpack -p 5003",
         "build": "next build --webpack",
         "start": "next start -H 0.0.0.0",
         "lint": "eslint",
@@ -12,7 +12,6 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "@packages/sdk": "workspace:*",
         "@packages/ui": "workspace:*",
         "@testing-library/dom": "^10.4.1",
         "next": "16.0.10",

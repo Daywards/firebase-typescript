@@ -1,17 +1,4 @@
 {
-    "apphosting": [
-        {
-            "backendId": "fb-app-hosting-backend",
-            "rootDir": "apps/fb-app-hosting",
-            "ignore": [
-                "node_modules",
-                ".git",
-                "firebase-debug.log",
-                "firebase-debug.*.log",
-                "functions"
-            ]
-        }
-    ],
     "hosting": {
         "public": "apps/fb-hosting/build",
         "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
@@ -26,14 +13,19 @@
                     "serviceId": "fb-app-hosting-backend",
                     "region": "us-central1"
                 }
+            },
+            {
+                "regex": "^/fb-app-hosting-2(/.*)?$",
+                "run": {
+                    "serviceId": "fb-app-hosting-backend-2",
+                    "region": "us-central1"
+                }
             }
         ]
     },
     "emulators": {
-        "apphosting": {
-            "port": 5006,
-            "rootDirectory": "apps/fb-app-hosting",
-            "startCommand": "pnpm dev"
+        "hub": {
+            "port": 4400
         },
         "auth": {
             "port": 9099

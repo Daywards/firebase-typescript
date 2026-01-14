@@ -1,0 +1,40 @@
+steps:
+    # 1. Install dependencies (mise, terraform, terragrunt)
+    # using a community builder or manual install if custom builder not available
+    - name: 'alpine:latest'
+      entrypoint: 'bash'
+      args:
+          - '-c'
+          - |
+              apk add --no-cache curl git bash libc6-compat
+              # Install mise
+              curl https://mise.run | sh
+              echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
+              source ~/.bashrc
+              mise install
+      id: 'install-tools'
+
+    # 2. Plan (on PRs) or Apply (on Push)
+    # This example assumes a unified script or separate triggers calling different entrypoints
+    # For simplicity, let's show a plan step.
+    - name: 'alpine:latest'
+      entrypoint: 'bash'
+      args:
+          - '-c'
+          - |
+              source ~/.bashrc
+              if [ "$_Ref" != "refs/heads/main" ] && [ "$_Ref" != "refs/heads/release" ]; then
+                echo "Running Plan..."
+                cd terraform/live/$_ENV && terragrunt run-all plan
+              else
+                echo "Running Apply..."
+                cd terraform/live/$_ENV && terragrunt run-all apply
+              fi
+      env:
+          - 'GOOGLE_CLOUD_PROJECT=$PROJECT_ID'
+      id: 'terraform-action'
+      waitFor: ['install-tools']
+
+substitutions:
+    _ENV: 'stage' # Default, overriden by valid triggers
+    _REF: 'refs/heads/main'

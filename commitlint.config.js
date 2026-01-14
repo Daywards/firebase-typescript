@@ -13,6 +13,7 @@ export default {
                 'fb-functions',
                 'root',
                 'scripts',
+                'terraform',
                 'ui',
             ],
         ],

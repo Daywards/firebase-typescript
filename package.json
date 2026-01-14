@@ -10,15 +10,23 @@
     "packageManager": "pnpm@10.27.0",
     "scripts": {
         "build": "pnpm -r run build",
-        "dev": "pnpm kill-emulator-ports && concurrently --handle-input --kill-others \"npx firebase emulators:start --only hosting,apphosting,functions\" \"pnpm --filter fb-hosting run dev\" \"pnpm --filter fb-functions run dev\" \"pnpm --filter @packages/ui run dev\" \"pnpm --filter @packages/ui storybook\"",
+        "dev": "pnpm kill-emulator-ports && concurrently --handle-input --kill-others \"npx firebase emulators:start --only hosting,functions\" \"pnpm --filter fb-hosting run dev\" \"pnpm --filter fb-functions run dev\" \"pnpm --filter fb-app-hosting run dev\" \"pnpm --filter fb-app-hosting-2 run dev\" \"pnpm --filter @packages/ui run dev\" \"pnpm --filter @packages/ui storybook\"",
         "format": "prettier --write .",
         "kill-emulator-ports": "pnpm --filter scripts run kill-emulator-ports",
-        "lint": "pnpm -r --parallel lint",
+        "lint": "concurrently \"pnpm -r --parallel lint\" \"pnpm run lint:infra\"",
+        "lint:infra": "tflint --recursive",
+        "infra:plan:stage": "cd terraform/live/stage && terragrunt run-all plan",
+        "infra:apply:stage": "cd terraform/live/stage && terragrunt run-all apply",
+        "infra:validate:stage": "cd terraform/live/stage && terragrunt run-all validate",
+        "infra:plan:prod": "cd terraform/live/prod && terragrunt run-all plan",
+        "infra:apply:prod": "cd terraform/live/prod && terragrunt run-all apply",
+        "infra:validate:prod": "cd terraform/live/prod && terragrunt run-all validate",
         "list-projects": "npx firebase projects:list",
         "prepare": "husky",
         "reinstall": "rm -f pnpm-lock.yaml && rm -rf node_modules && pnpm -r exec rm -rf node_modules && pnpm install -r",
         "create-sa": "pnpm --filter scripts run create-sa",
         "setup-builder-iam": "pnpm --filter scripts run setup-builder-iam",
+        "setup-default-compute-iam": "pnpm --filter scripts run setup-default-compute-iam",
         "setup-functions-iam": "pnpm --filter scripts run setup-functions-iam",
         "switch-project": "npx firebase use",
         "test": "pnpm -r --parallel run test",
@@ -39,6 +47,9 @@
     "lint-staged": {
         "**/*.{js,jsx,ts,tsx,json,css,scss,md,yaml,yml}": [
             "prettier --write"
+        ],
+        "**/*.{tf,hcl}": [
+            "bash -c 'tflint --recursive' --"
         ]
     }
 }
