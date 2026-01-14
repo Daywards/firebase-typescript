@@ -46,7 +46,7 @@ Map of this monorepo:
 - **Package Manager:** `pnpm` (Use `workspace:*` for internal dependencies)
 - **Runtime:** Node.js 22 (Required for Cloud Functions & App Hosting)
 - **Frameworks:**
-    - Next.js 15 (App Router preferred)
+    - Next.js 16 (App Router preferred)
     - React 19
 - **Language:** TypeScript 5.x (`strict: true`)
 - **Firebase:** Admin SDK v12, Functions v2
